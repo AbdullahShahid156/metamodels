@@ -7,6 +7,7 @@ CREATE TABLE profiles (
   avatar_url text,
   bio text,
   role text CHECK (role IN ('buyer', 'seller', 'both')) DEFAULT 'buyer',
+  is_admin boolean DEFAULT false,
   created_at timestamp WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
@@ -31,10 +32,14 @@ CREATE TABLE listings (
   name text NOT NULL,
   slug text UNIQUE NOT NULL,
   category text NOT NULL,
-  type text CHECK (type IN ('model', 'agent')) NOT NULL,
+  type text CHECK (type IN ('model', 'agent', 'other')) NOT NULL,
   description text,
   short_description text,
   capabilities text[] DEFAULT '{}',
+  version text,
+  training_details text,
+  supported_framework text,
+  use_case text,
   sample_input text,
   sample_output text,
   rent_price numeric DEFAULT 0,
@@ -44,6 +49,8 @@ CREATE TABLE listings (
   status text CHECK (status IN ('pending', 'active', 'paused', 'rejected')) DEFAULT 'pending',
   ownership_proof_url text,
   model_card_url text,
+  instruction_doc_url text,
+  showcase_images text[] DEFAULT '{}',
   architecture_notes text,
   api_endpoint text,
   rating numeric DEFAULT 0,
