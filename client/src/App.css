@@ -1,0 +1,133 @@
+/* ─── MetaModels Animation & Effect Utilities ─── */
+
+/* Particle network effect */
+.particle-dot {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(226, 179, 64, 0.4);
+  border-radius: 50%;
+  animation: particleDrift linear infinite;
+}
+
+@keyframes particleDrift {
+  0% {
+    opacity: 0;
+    transform: translateY(0) translateX(0);
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-100vh) translateX(50px);
+  }
+}
+
+/* Gradient animate for backgrounds */
+.gradient-animate {
+  background-size: 400% 400%;
+  animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Reveal on scroll (used with Framer Motion) */
+.reveal-container > * {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* Line connector for steps */
+.step-connector {
+  position: relative;
+}
+
+.step-connector::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -2rem;
+  width: 2rem;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(226, 179, 64, 0.3), transparent);
+}
+
+.step-connector:last-child::after {
+  display: none;
+}
+
+/* Spotlight hover effect on cards */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  top: var(--mouse-y, 50%);
+  left: var(--mouse-x, 50%);
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(226, 179, 64, 0.06) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+/* Typing cursor effect */
+.typing-cursor::after {
+  content: '|';
+  color: #E2B340;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* Marquee for trust logos */
+.marquee-track {
+  display: flex;
+  animation: marquee 30s linear infinite;
+  gap: 4rem;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Glow pill (badge with glow) */
+.glow-pill {
+  position: relative;
+}
+
+.glow-pill::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(226, 179, 64, 0.3), rgba(139, 140, 248, 0.3));
+  filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: -1;
+}
+
+.glow-pill:hover::after {
+  opacity: 1;
+}
