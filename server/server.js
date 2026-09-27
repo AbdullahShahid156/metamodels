@@ -14,6 +14,7 @@ app.use(express.json());
 
 app.use('/api/listings', require('./routes/listings'));
 app.use('/api/purchases', require('./routes/purchases'));
+app.use('/api/keys', require('./routes/keys'));
 app.use('/api/apikeys', require('./routes/apikeys'));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/auth', require('./routes/auth'));

@@ -7,8 +7,9 @@ const { supabaseAdmin } = require('../lib/supabaseAdmin');
 const ALLOWED_CREATE_FIELDS = [
   'name', 'type', 'description', 'short_description', 'category',
   'capabilities', 'sample_input', 'sample_output',
+  'version', 'training_details', 'supported_framework', 'use_case',
   'rent_price', 'buy_price', 'rent_enabled', 'buy_enabled',
-  'ownership_proof_url', 'model_card_url', 'architecture_notes', 'api_endpoint',
+  'ownership_proof_url', 'model_card_url', 'instruction_doc_url', 'architecture_notes', 'api_endpoint',
   'showcase_images'
 ];
 
@@ -16,10 +17,26 @@ const ALLOWED_CREATE_FIELDS = [
 const ALLOWED_UPDATE_FIELDS = [
   'name', 'description', 'short_description',
   'capabilities', 'sample_input', 'sample_output',
+  'version', 'training_details', 'supported_framework', 'use_case',
   'rent_price', 'buy_price', 'rent_enabled', 'buy_enabled',
-  'ownership_proof_url', 'model_card_url', 'architecture_notes', 'api_endpoint',
+  'ownership_proof_url', 'model_card_url', 'instruction_doc_url', 'architecture_notes', 'api_endpoint',
   'status', 'showcase_images'
 ];
+
+// Client sends camelCase metadata; database columns are snake_case
+const FIELD_ALIASES = {
+  trainingDetails: 'training_details',
+  supportedFramework: 'supported_framework',
+  useCase: 'use_case'
+};
+
+const normalizeFields = (body) => {
+  const normalized = {};
+  for (const [key, value] of Object.entries(body || {})) {
+    normalized[FIELD_ALIASES[key] || key] = value;
+  }
+  return normalized;
+};
 
 // Helper to pick only allowed fields from an object
 const pickFields = (obj, allowedFields) => {
@@ -104,7 +121,7 @@ router.post('/', requireAuth, requireSeller, async (req, res) => {
     }
 
     // Only pick allowed fields — prevents injection of rating, total_sales, status, etc.
-    const safeData = pickFields(req.body, ALLOWED_CREATE_FIELDS);
+    const safeData = pickFields(normalizeFields(req.body), ALLOWED_CREATE_FIELDS);
 
     const listingData = {
       ...safeData,
@@ -122,7 +139,10 @@ router.post('/', requireAuth, requireSeller, async (req, res) => {
       .select()
       .single();
 
-    if (error) throw error;
+    if (error) {
+      console.error('Listing insert error:', error);
+      return res.status(400).json({ error: error.message || 'Invalid listing data' });
+    }
     res.status(201).json(data);
   } catch (err) {
     console.error(err);
@@ -146,7 +166,7 @@ router.patch('/:id', requireAuth, requireSeller, async (req, res) => {
     if (existing.seller_id !== req.user.id) return res.status(403).json({ error: 'Unauthorized' });
 
     // Only pick allowed fields — prevents injection of rating, total_sales, seller_id, etc.
-    const safeData = pickFields(req.body, ALLOWED_UPDATE_FIELDS);
+    const safeData = pickFields(normalizeFields(req.body), ALLOWED_UPDATE_FIELDS);
 
     // Validate status if being changed (sellers can only pause/activate their own)
     if (safeData.status && !['active', 'paused'].includes(safeData.status)) {

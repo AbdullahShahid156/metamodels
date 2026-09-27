@@ -179,4 +179,41 @@ router.post('/', requireAuth, requireBuyer, async (req, res) => {
   }
 });
 
+// POST /api/purchases/:id/reset-key - rotate the key, returns the new raw key once
+router.post('/:id/reset-key', requireAuth, requireBuyer, async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const { data: purchase, error: fetchError } = await supabaseAdmin
+      .from('purchases')
+      .select('id, buyer_id, type, expires_at, is_active, listings(name)')
+      .eq('id', id)
+      .single();
+
+    if (fetchError || !purchase) return res.status(404).json({ error: 'Purchase not found' });
+    if (purchase.buyer_id !== req.user.id) return res.status(403).json({ error: 'Not your purchase' });
+    if (!purchase.is_active) return res.status(400).json({ error: 'This purchase is no longer active' });
+    if (purchase.type === 'rent' && purchase.expires_at && new Date(purchase.expires_at) < new Date()) {
+      return res.status(400).json({ error: 'Rental expired — renew before rotating the key' });
+    }
+
+    const rawApiKey = 'mm_' + crypto.randomBytes(24).toString('hex');
+    const keyHash = crypto.createHash('sha256').update(rawApiKey).digest('hex');
+    const keyPreview = rawApiKey.slice(0, 10) + '...';
+
+    const { error: updateError } = await supabaseAdmin
+      .from('purchases')
+      .update({ api_key: keyHash, key_preview: keyPreview })
+      .eq('id', id);
+
+    if (updateError) throw updateError;
+
+    // Old key stops working immediately (only the hash was stored — nothing else to clean up)
+    res.json({ rawApiKey, key_preview: keyPreview });
+  } catch (err) {
+    console.error('Reset key error:', err);
+    res.status(500).json({ error: 'Failed to reset API key' });
+  }
+});
+
 module.exports = router;
