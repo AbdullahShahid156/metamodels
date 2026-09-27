@@ -222,6 +222,7 @@ cd metamodels
 2. Open **SQL Editor** and run, in order:
    - [`schema.sql`](./schema.sql) — tables, triggers, RLS policies
    - [`setup_admin.sql`](./setup_admin.sql) — adds `is_admin` and promotes your admin email
+   - *Upgrading an older database?* run [`migrations/0001_upgrade_existing_db.sql`](./migrations/0001_upgrade_existing_db.sql) instead of re-running the above
 3. Copy your project credentials from **Project Settings → API**.
 4. (Optional) Install the branded OTP email using [`SUPABASE_EMAIL_TEMPLATE.md`](./SUPABASE_EMAIL_TEMPLATE.md)
    — enable **“Use OTP instead of link”** under Auth → Email Templates.
@@ -328,8 +329,30 @@ Base URL: `http://localhost:5000/api` — all protected routes require `Authoriz
 | Method | Endpoint | Access | Description |
 |---|---|---|---|
 | POST | `/purchases` | Buyer | Mock checkout → returns `rawApiKey` **once** |
+| POST | `/purchases/:id/reset-key` | Buyer | Rotate key → new `rawApiKey` returned once (old key dies) |
 | GET | `/purchases/mine` | Buyer | Purchase history with listings + own review |
 | GET | `/purchases/seller-stats` | Seller | Revenue, rentals, 30-day chart data |
+
+### API Key Verification & Invocation
+Authenticate with the purchased key — no browser session required.
+
+| Method | Endpoint | Auth | Description |
+|---|---|---|---|
+| POST | `/keys/verify` | `x-api-key` header (or body `api_key`) | Validate a key → returns `{ valid, listing, purchase }` |
+| POST | `/keys/invoke` | `x-api-key` header | Verifies the key, then proxies `body.input` to the listing's `api_endpoint` |
+
+```bash
+# Verify
+curl -X POST http://localhost:5000/api/keys/verify \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: mm_xxxxxxxx..." 
+
+# Invoke the model behind a listing
+curl -X POST http://localhost:5000/api/keys/invoke \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: mm_xxxxxxxx..." \
+  -d '{"input": {"prompt": "hello"}}'
+```
 
 ### Reviews
 | Method | Endpoint | Access | Description |
@@ -388,6 +411,7 @@ The repository is delivered in reviewable, single-responsibility commits:
 | 5️⃣ | DB utility & migration scripts |
 | 6️⃣ | Design system specs & UI/UX agent assets |
 | 7️⃣ | README visual identity — animated banner, typing tagline, status bars, dividers |
+| 8️⃣ | P0 hardening — key verify/invoke, key rotation, listing metadata, category filters |
 
 <img src="./assets/divider.svg" alt="" width="100%">
 
@@ -398,13 +422,14 @@ Honest status of the current build:
 - [x] Auth (OTP), roles, admin moderation, reviews, seller/admin dashboards
 - [x] IPFS uploads (Pinata) + gateway downloads
 - [x] Mock checkout with one-time API-key reveal
-- [ ] **API-key redemption/invocation endpoint** — keys are issued but not yet validated against `api_endpoint`
+- [x] **API-key verification & invocation** — `POST /api/keys/verify` + `/api/keys/invoke` proxy
+- [x] **Key recovery** — *Reveal Key* rotates the purchase key and shows it once (copy/download)
+- [x] Listing metadata (`version`, `training_details`, …) persisted; `type='other'` supported
 - [ ] **API Key Manager UI** (`/seller/keys` is a placeholder — backend routes exist)
 - [ ] Real payment provider (Stripe / etc.)
 - [ ] Profile editing UI (API exists, UI is read-only)
 - [ ] Pagination + price-range filtering on marketplace
 - [ ] Automated tests & CI
-- [ ] Revealable key history in *My Purchases* (currently only the SHA-256 hash is stored)
 
 <img src="./assets/divider.svg" alt="" width="100%">
 
