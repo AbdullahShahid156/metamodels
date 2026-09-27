@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { Modal } from '../components/ui/Modal';
-import { Key, Copy, CheckCircle, ExternalLink, Activity, Loader2, Rocket, ArrowRight, Clock, ShieldAlert, Eye, EyeOff, Download, Star } from 'lucide-react';
+import { Key, Copy, CheckCircle, ExternalLink, Activity, Loader2, Rocket, ArrowRight, Clock, ShieldAlert, RefreshCw, Download, Star } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
@@ -18,7 +18,8 @@ export const MyPurchases = () => {
   const [isUpgrading, setIsUpgrading] = useState(false);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
   const [selectedPurchase, setSelectedPurchase] = useState(null);
-  const [revealedKeys, setRevealedKeys] = useState({});
+  const [rotatingId, setRotatingId] = useState(null);
+  const [newKey, setNewKey] = useState(null);
   const [showRatingModal, setShowRatingModal] = useState(false);
   const [ratingPurchase, setRatingPurchase] = useState(null);
   const [ratingValue, setRatingValue] = useState(5);
@@ -57,6 +58,45 @@ export const MyPurchases = () => {
   const handleCopy = (text) => {
     navigator.clipboard.writeText(text);
     toast.success('API Key copied to clipboard');
+  };
+
+  const downloadKeyFile = (key, name) => {
+    const content = `MetaModels API Key\n==================\nListing: ${name}\nKey:     ${key}\n\nKeep this file private. The full key is shown only once.\n`;
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `metamodels-api-key-${(name || 'key').toLowerCase().replace(/[^a-z0-9]+/g, '-')}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    toast.success('Key file downloaded');
+  };
+
+  const handleRotateKey = async (purchase) => {
+    if (!window.confirm('Generate a new API key? The current key will stop working immediately.')) return;
+    setRotatingId(purchase.id);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('You must be logged in');
+
+      const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const res = await fetch(`${apiBase}/purchases/${purchase.id}/reset-key`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${session.access_token}` }
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to reset key');
+
+      setNewKey({ purchase, rawApiKey: data.rawApiKey });
+      toast.success('New API key generated — store it now');
+      fetchPurchases();
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      setRotatingId(null);
+    }
   };
 
   const handleUpgrade = async () => {
@@ -267,26 +307,22 @@ export const MyPurchases = () => {
             <div className="text-[10px] uppercase font-bold tracking-widest text-[#64748b] pl-1">API Key</div>
             <div className="flex">
               <div className="bg-[#0C0F1A] border border-white/[0.06] rounded-l-xl px-4 py-2.5 font-mono text-sm text-[#F0D060]/80 flex-grow border-r-0 truncate select-all">
-                {revealedKeys[purchase.id] 
-                  ? (purchase.api_key || 'Key not available')
-                  : (purchase.key_preview || purchase.api_key?.slice(0, 10) + '...' || '••••••••••...')
-                }
+                {purchase.key_preview || '••••••••••...'}
               </div>
-              <button 
-                onClick={() => setRevealedKeys(prev => ({ ...prev, [purchase.id]: !prev[purchase.id] }))}
-                className="bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] text-[#64748b] hover:text-white px-3 py-2.5 transition-colors flex items-center justify-center cursor-pointer border-r-0"
-                title={revealedKeys[purchase.id] ? 'Hide key' : 'Reveal key'}
+              <button
+                onClick={() => handleRotateKey(purchase)}
+                disabled={rotatingId === purchase.id}
+                className="bg-white/[0.04] border border-white/[0.06] hover:bg-[#E2B340]/10 text-[#64748b] hover:text-[#F0D060] px-4 py-2.5 rounded-r-xl transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 text-xs font-semibold whitespace-nowrap"
+                title="Rotate key and reveal the full key"
               >
-                {revealedKeys[purchase.id] ? <EyeOff size={14} /> : <Eye size={14} />}
-              </button>
-              <button 
-                onClick={() => handleCopy(purchase.api_key)}
-                className="bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] text-white px-4 py-2.5 rounded-r-xl transition-colors flex items-center justify-center cursor-pointer"
-                title="Copy to clipboard"
-              >
-                <Copy size={14} />
+                {rotatingId === purchase.id
+                  ? <><Loader2 size={14} className="animate-spin" /> Rotating…</>
+                  : <><RefreshCw size={14} /> Reveal Key</>}
               </button>
             </div>
+            <p className="text-[11px] text-[#64748b] pl-1 leading-snug">
+              Full key is stored hashed — use <strong className="text-[#94a3b8]">Reveal Key</strong> to generate & see it.
+            </p>
             {purchase.listings?.architecture_notes && (
               <Button 
                 variant="ghost" 
@@ -468,6 +504,47 @@ export const MyPurchases = () => {
             </Button>
           </div>
         </div>
+      </Modal>
+
+      <Modal
+        isOpen={!!newKey}
+        onClose={() => setNewKey(null)}
+        title="Your API Key"
+      >
+        {newKey && (
+          <div className="text-center pb-4">
+            <div className="w-16 h-16 rounded-full bg-[#E2B340]/15 flex items-center justify-center text-[#F0D060] mx-auto mb-5 border border-[#E2B340]/20">
+              <Key size={30} />
+            </div>
+            <h3 className="text-xl font-bold text-white mb-2">{newKey.purchase.listings?.name}</h3>
+            <p className="text-[#94a3b8] text-sm mb-6">
+              Copy or download this key now — it is stored hashed and won't be shown again unless you rotate it.
+            </p>
+
+            <div className="bg-[#0C0F1A] border border-white/[0.06] p-4 rounded-xl mb-5 text-left">
+              <span className="text-[10px] text-[#94a3b8] uppercase tracking-widest font-bold mb-2 block">Secret API Key</span>
+              <div className="font-mono text-[#E2B340] text-sm break-all select-all">{newKey.rawApiKey}</div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              <Button variant="secondary" className="gap-2" onClick={() => handleCopy(newKey.rawApiKey)}>
+                <Copy size={15} /> Copy Key
+              </Button>
+              <Button variant="secondary" className="gap-2" onClick={() => downloadKeyFile(newKey.rawApiKey, newKey.purchase.listings?.name)}>
+                <Download size={15} /> Download .txt
+              </Button>
+            </div>
+
+            <div className="bg-[#8B8CF8]/10 border border-[#8B8CF8]/25 rounded-xl p-3 text-xs text-[#A5B4FC] mb-4 text-left flex gap-2">
+              <ShieldAlert size={15} className="shrink-0 mt-0.5" />
+              <span>Test it: <code className="text-[#F0D060]">POST /api/keys/verify</code> with header <code className="text-[#F0D060]">x-api-key</code>.</span>
+            </div>
+
+            <Button className="w-full" onClick={() => setNewKey(null)}>
+              Done
+            </Button>
+          </div>
+        )}
       </Modal>
     </motion.div>
   );

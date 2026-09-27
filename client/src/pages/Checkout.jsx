@@ -3,7 +3,7 @@ import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '../components/ui/Button';
 import { Modal } from '../components/ui/Modal';
-import { CheckCircle, Loader2, Shield, ArrowRight, Plus, Minus } from 'lucide-react';
+import { CheckCircle, Loader2, Shield, ArrowRight, Plus, Minus, Copy, Download } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 import toast from 'react-hot-toast';
 
@@ -79,6 +79,25 @@ export const Checkout = () => {
 
   const finishCheckout = () => {
     navigate('/purchases');
+  };
+
+  const copyApiKey = () => {
+    navigator.clipboard.writeText(apiKey);
+    toast.success('API key copied to clipboard');
+  };
+
+  const downloadApiKey = () => {
+    const content = `MetaModels API Key\n==================\nListing: ${model.name}\nKey:     ${apiKey}\n\nKeep this file private. The full key is shown only once.\n`;
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `metamodels-api-key-${model.slug || 'key'}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    toast.success('Key file downloaded');
   };
 
   if (loadingModel) {
@@ -221,11 +240,20 @@ export const Checkout = () => {
           <p className="text-[#e4e4e7] mb-2 font-medium">Your generated API key for <span className="font-bold text-white">{model.name}</span> is ready.</p>
           <p className="text-[#94a3b8] text-sm mb-6">Please securely store this key. It will not be shown in full again.</p>
           
-          <div className="bg-[#0C0F1A] border border-white/[0.06] p-4 rounded-xl mb-6 text-left">
+          <div className="bg-[#0C0F1A] border border-white/[0.06] p-4 rounded-xl mb-4 text-left">
              <span className="text-[10px] text-[#94a3b8] uppercase tracking-widest font-bold mb-2 block">Secret API Key</span>
              <div className="font-mono text-[#E2B340] text-sm break-all select-all">{apiKey}</div>
           </div>
-          
+
+          <div className="grid grid-cols-2 gap-3 mb-4">
+            <Button variant="secondary" className="gap-2" onClick={copyApiKey}>
+              <Copy size={15} /> Copy Key
+            </Button>
+            <Button variant="secondary" className="gap-2" onClick={downloadApiKey}>
+              <Download size={15} /> Download .txt
+            </Button>
+          </div>
+
           <Button onClick={finishCheckout} className="w-full">
             Go to My Purchases
           </Button>

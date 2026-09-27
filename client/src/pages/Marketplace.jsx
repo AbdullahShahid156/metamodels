@@ -93,7 +93,7 @@ export const Marketplace = () => {
     type: searchParams.get('type') || ''
   });
 
-  const categories = ['All', 'LLM', 'Vision', 'Audio', 'Tools', 'Other'];
+  const categories = ['All', 'General', 'LLM', 'NLP', 'Vision', 'Coding', 'Audio', 'Agents', 'Tools', 'Other'];
 
   useEffect(() => {
     const fetchListings = async () => {

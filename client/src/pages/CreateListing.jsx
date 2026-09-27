@@ -23,7 +23,8 @@ export const CreateListing = () => {
     buy_price: '',
     trainingDetails: '',
     supportedFramework: '',
-    useCase: ''
+    useCase: '',
+    api_endpoint: ''
   });
 
   useEffect(() => {
@@ -442,6 +443,21 @@ export const CreateListing = () => {
                   />
                 </div>
               )}
+            </div>
+
+            <div className="mt-4">
+              <Input
+                label="API Endpoint (optional)"
+                name="api_endpoint"
+                type="url"
+                value={formData.api_endpoint}
+                onChange={handleInputChange}
+                placeholder="https://your-service.com/predict"
+              />
+              <p className="text-xs text-[#6B7280] mt-1.5 flex items-center gap-1.5">
+                <Info size={12} className="shrink-0" />
+                Buyers' API keys are validated against this URL via <code className="text-[#F0D060]">POST /api/keys/invoke</code>.
+              </p>
             </div>
           </div>
 
