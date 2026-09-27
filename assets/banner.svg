@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="340" viewBox="0 0 1200 340" role="img" aria-label="MetaModels — AI Model Marketplace">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0C0F1A"/>
+      <stop offset="55%" stop-color="#121629"/>
+      <stop offset="100%" stop-color="#1A1430"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#E2B340">
+        <animate attributeName="stop-color" values="#E2B340;#F0D060;#8B8CF8;#E2B340" dur="7s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="50%" stop-color="#F0D060">
+        <animate attributeName="stop-color" values="#F0D060;#8B8CF8;#E2B340;#F0D060" dur="7s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#8B8CF8">
+        <animate attributeName="stop-color" values="#8B8CF8;#E2B340;#F0D060;#8B8CF8" dur="7s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#E2B340" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#E2B340" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#8B8CF8" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E2B340" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#E2B340" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8B8CF8" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#8B8CF8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="340" rx="20" fill="url(#bg)"/>
+  <rect x="1" y="1" width="1198" height="338" rx="19" fill="none" stroke="#E2B340" stroke-opacity="0.22"/>
+
+  <ellipse cx="240" cy="70" rx="260" ry="140" fill="url(#glowA)"/>
+  <ellipse cx="980" cy="290" rx="300" ry="150" fill="url(#glowB)"/>
+
+  <circle r="3.5" fill="#E2B340" opacity="0">
+    <animate attributeName="cy" values="310;30" dur="9s" begin="0s" repeatCount="indefinite"/>
+    <animate attributeName="cx" values="150;185;150" dur="9s" begin="0s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;0" dur="9s" begin="0s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="3" fill="#8B8CF8" opacity="0">
+    <animate attributeName="cy" values="320;40" dur="11s" begin="1.5s" repeatCount="indefinite"/>
+    <animate attributeName="cx" values="360;330;360" dur="11s" begin="1.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.9;0" dur="11s" begin="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="4" fill="#F0D060" opacity="0">
+    <animate attributeName="cy" values="330;20" dur="10s" begin="3s" repeatCount="indefinite"/>
+    <animate attributeName="cx" values="640;670;640" dur="10s" begin="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;0" dur="10s" begin="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="3" fill="#E2B340" opacity="0">
+    <animate attributeName="cy" values="315;35" dur="12s" begin="4.5s" repeatCount="indefinite"/>
+    <animate attributeName="cx" values="880;910;880" dur="12s" begin="4.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.95;0" dur="12s" begin="4.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="3.5" fill="#8B8CF8" opacity="0">
+    <animate attributeName="cy" values="325;25" dur="9.5s" begin="6s" repeatCount="indefinite"/>
+    <animate attributeName="cx" values="1060;1030;1060" dur="9.5s" begin="6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;1;0" dur="9.5s" begin="6s" repeatCount="indefinite"/>
+  </circle>
+  <circle r="2.5" fill="#F0D060" opacity="0">
+    <animate attributeName="cy" values="315;45" dur="13s" begin="7.5s" repeatCount="indefinite"/>
+    <animate attributeName="cx" values="480;505;480" dur="13s" begin="7.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.85;0" dur="13s" begin="7.5s" repeatCount="indefinite"/>
+  </circle>
+
+  <text x="600" y="78" text-anchor="middle" font-family="Segoe UI, -apple-system, Helvetica, Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="7" fill="#8B8CF8">P2P AI MODEL MARKETPLACE</text>
+
+  <text x="600" y="168" text-anchor="middle" font-family="Segoe UI, -apple-system, Helvetica, Arial, sans-serif" font-size="78" font-weight="800" fill="url(#gold)">MetaModels</text>
+
+  <text x="600" y="222" text-anchor="middle" font-family="Segoe UI, -apple-system, Helvetica, Arial, sans-serif" font-size="23" fill="#94A3B8">List it &#183; Rent it &#183; Deploy it &#8212; AI models &amp; agents, decentralized</text>
+
+  <g>
+    <rect x="600" y="140" width="130" height="46" fill="url(#shine)">
+      <animateTransform attributeName="transform" type="translate" values="-520 0; 1250 0" dur="5s" begin="0.5s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <rect x="120" y="272" width="960" height="3" rx="1.5" fill="url(#edge)">
+    <animate attributeName="opacity" values="0.35;1;0.35" dur="4s" repeatCount="indefinite"/>
+  </rect>
+
+  <text x="600" y="312" text-anchor="middle" font-family="Segoe UI, -apple-system, Helvetica, Arial, sans-serif" font-size="15" fill="#64748B">React &#183; Express &#183; Supabase &#183; IPFS / Pinata</text>
+</svg>

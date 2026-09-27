@@ -1,18 +1,32 @@
 <div align="center">
 
-# 🏛️ MetaModels
+<img src="./assets/banner.svg" alt="MetaModels — P2P AI Model Marketplace" width="1000">
 
-**A peer-to-peer marketplace for renting & buying AI models and agents — with IPFS-backed assets and instant API-key delivery.**
+<br>
 
-![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
-![Express](https://img.shields.io/badge/Express-5-000000?logo=express&logoColor=white)
-![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL%20%2B%20Auth-3FCF8E?logo=supabase&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?logo=tailwindcss&logoColor=white)
-![IPFS](https://img.shields.io/badge/IPFS-Pinata-65C2CB?logo=ipfs&logoColor=white)
-![License](https://img.shields.io/badge/license-MIT-green)
+<img src="./assets/typing.svg" alt="Discover, rent & deploy AI models in one marketplace" width="672">
 
-*List it. Rent it. Deploy it. — AI assets, decentralized and payable in one click.*
+<br><br>
+
+![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Express](https://img.shields.io/badge/Express-5-000000?style=for-the-badge&logo=express&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL%20%2B%20Auth-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![IPFS](https://img.shields.io/badge/IPFS-Pinata-65C2CB?style=for-the-badge&logo=ipfs&logoColor=white)
+
+<br>
+
+![Stars](https://img.shields.io/github/stars/AbdullahShahid156/metamodels?style=for-the-badge&logo=github&label=Stars&color=E2B340)
+![Forks](https://img.shields.io/github/forks/AbdullahShahid156/metamodels?style=for-the-badge&logo=github&label=Forks&color=8B8CF8)
+![Issues](https://img.shields.io/github/issues/AbdullahShahid156/metamodels?style=for-the-badge&label=Issues&color=F43F5E)
+![Last Commit](https://img.shields.io/github/last-commit/AbdullahShahid156/metamodels?style=for-the-badge&label=Last%20Commit&color=38B2AC)
+![Contributors](https://img.shields.io/github/contributors/AbdullahShahid156/metamodels?style=for-the-badge&label=Contributors&color=FEBC2E)
+![License](https://img.shields.io/github/license/AbdullahShahid156/metamodels?style=for-the-badge&label=License&color=10B981)
+
+<br>
+
+<img src="https://github-readme-stats.vercel.app/api/pin/?username=AbdullahShahid156&repo=metamodels&title_color=E2B340&icon_color=8B8CF8&text_color=94A3B8&bg_color=0C0F1A&border_color=E2B340&ring_color=E2B340&hide_border=false" alt="MetaModels repo stats">
 
 </div>
 
@@ -33,7 +47,7 @@
 - [Development Phases](#-development-phases)
 - [Roadmap & Known Limitations](#-roadmap--known-limitations)
 
----
+<img src="./assets/divider.svg" alt="" width="100%">
 
 ## 🌟 Overview
 
@@ -45,66 +59,84 @@ MetaModels is a full-stack marketplace where:
 
 Authentication is handled by **Supabase Auth** (email + OTP verification), the API is a stateless **Express** service using the Supabase service-role client, and the UI is a **React 19** single-page app with a dark "Obsidian Gold" design language.
 
-> ⚠️ **Test mode:** payments are mocked — no real charges are made. See [Roadmap](#-roadmap--known-limitations).
+> [!NOTE]
+> 💳 **Test mode:** payments are mocked — no real charges are made. See [Roadmap](#-roadmap--known-limitations).
 
----
+<img src="./assets/status.svg" alt="Project status bars" width="800">
+
+<img src="./assets/divider.svg" alt="" width="100%">
 
 ## ✨ Key Features
 
+<table>
+  <tr>
+    <td width="33%">
+
 ### 👤 Buyers
-- Browse marketplace with search, category and asset-type filters
-- Rich listing detail pages: overview, capabilities, pricing, image carousel, reviews
-- Rent (1–30 days with live price calculation) or buy outright
-- Checkout with order summary → **one-time reveal of the secret API key**
-- *My Purchases* dashboard: rental countdown timers, key reveal/copy, IPFS downloads
-- Rate & review purchased assets; "Become a Seller" upgrade flow
+- 🔍 Search + category & type filters
+- 🖼️ Detail pages: tabs, gallery, reviews
+- ⏱️ Rent 1–30 days with live pricing
+- 🔑 One-time **secret API key** reveal
+- ⏳ Rental countdown + IPFS downloads
+- ⭐ Rate & review purchased assets
+
+</td>
+    <td width="33%">
 
 ### 🛍️ Sellers
-- Create listings (model / agent) with capability tags, pricing and showcase images
-- **Direct IPFS uploads** (model card + instruction doc + images) via Pinata
-- Dashboard with revenue chart (30-day), active rentals and recent transactions
-- Manage listings: edit, activate/pause, delete (with cascading cleanup)
-- Re-rent purchased assets as a reseller
+- 📦 List models / agents with capability tags
+- ☁️ Direct **IPFS uploads** via Pinata
+- 📈 Revenue chart, rentals & transactions
+- 🎛️ Edit / pause / delete listings
+- ♻️ Re-rent purchased assets as reseller
+
+</td>
+    <td width="33%">
 
 ### 🛡️ Admins
-- Platform stats (revenue, active/pending listings, users)
-- Listing moderation queue: review details → approve / reject
-- Hidden admin portal entry on the landing page; `/admin` route
+- 📊 Platform KPIs (revenue, listings, users)
+- 📋 Moderation queue with detail modal
+- ✅ Approve / reject listings in one click
+- 🚪 Hidden admin portal on landing page
+
+</td>
+  </tr>
+  <tr>
+    <td colspan="3">
 
 ### ⚙️ Platform
-- Email + OTP signup verification with branded transactional template
-- Role-based access control (`buyer` / `seller` / `both` + `is_admin`)
-- JWT-protected API with ownership checks on every mutation
-- API keys stored as **SHA-256 hashes**, never in plaintext
-- Hourly background job expires stale rentals & API keys
-- 30-minute inactivity auto-logout, animated page transitions, toast notifications
+`email + OTP verification` · `role-based access (buyer / seller / both / admin)` · `JWT-protected API with ownership checks` · `SHA-256 hashed keys` · `hourly expiry jobs` · `30-min idle auto-logout` · `animated routes & toasts`
 
----
+</td>
+  </tr>
+</table>
+
+<img src="./assets/divider.svg" alt="" width="100%">
 
 ## 🧰 Tech Stack
 
 | Layer | Technology |
 |---|---|
-| Frontend | React 19, Vite 8, React Router 7, Tailwind CSS 4, Framer Motion, Recharts |
-| Backend | Node.js, Express 5 (CommonJS), Multer (uploads) |
-| Database & Auth | Supabase (PostgreSQL + RLS + GoTrue auth) via `@supabase/supabase-js` |
-| Storage | IPFS pinning through **Pinata** API, served via Pinata gateway |
-| Payments | Mock checkout (test mode) — pluggable for Stripe/Razorpay later |
-| Tooling | ESLint, npm, concurrent dev servers |
+| 🎨 Frontend | React 19, Vite 8, React Router 7, Tailwind CSS 4, Framer Motion, Recharts |
+| ⚙️ Backend | Node.js, Express 5 (CommonJS), Multer (uploads) |
+| 🗄️ Database & Auth | Supabase (PostgreSQL + RLS + GoTrue auth) via `@supabase/supabase-js` |
+| ☁️ Storage | IPFS pinning through **Pinata** API, served via Pinata gateway |
+| 💳 Payments | Mock checkout (test mode) — pluggable for Stripe/Razorpay later |
+| 🛠️ Tooling | ESLint, npm, concurrent dev servers |
 
----
+<img src="./assets/divider.svg" alt="" width="100%">
 
 ## 🏗️ Architecture
 
 ```mermaid
 flowchart LR
-    subgraph Client["React SPA (Vite :5173)"]
+    subgraph Client["React SPA - Vite :5173"]
         UI[Pages / Components]
         AC[AuthContext - Supabase JS]
     end
 
-    subgraph Server["Express API (:5000)"]
-        MW[Auth Middleware<br/>JWT - requireSeller/Buyer/Admin]
+    subgraph Server["Express API - :5000"]
+        MW[Auth Middleware<br/>JWT - role guards]
         R[Routers<br/>listings - purchases - reviews<br/>admin - ipfs - users - apikeys]
         JOB[Hourly expiry job]
     end
@@ -121,45 +153,56 @@ flowchart LR
     R -- "pinFileToIPFS" --> PIN
     UI -- "download / preview" --> PIN
     JOB --> SB
+
+    classDef clientNode fill:#1C2035,stroke:#E2B340,color:#F5F5F0
+    classDef serverNode fill:#151B33,stroke:#8B8CF8,color:#F5F5F0
+    classDef extNode fill:#0E2620,stroke:#3FCF8E,color:#F5F5F0
+    class UI,AC clientNode
+    class MW,R,JOB serverNode
+    class SB,PIN extNode
 ```
 
 **Request flow:** browser authenticates directly with Supabase → receives a JWT → every API call sends `Authorization: Bearer <token>` → middleware resolves the user + profile → routers perform ownership/role checks → responses are JSON.
 
----
+<img src="./assets/divider.svg" alt="" width="100%">
 
 ## 📁 Project Structure
 
 ```
-fyp-code/
-├── client/                     # React SPA
+metamodels/
+├── assets/                   # README visuals (animated SVGs)
+├── client/                   # React SPA
 │   ├── src/
-│   │   ├── pages/              # 12 screens (Landing, Marketplace, Checkout, …)
+│   │   ├── pages/            # 12 screens (Landing, Marketplace, Checkout, …)
 │   │   ├── components/
-│   │   │   ├── auth/           # ProtectedRoute
-│   │   │   ├── layout/         # Navbar, Footer, ErrorBoundary, ScrollToTop
-│   │   │   └── ui/             # Button, Input, Card, Badge, Avatar, Modal, Spinner
-│   │   ├── context/            # AuthContext (session + profile + idle logout)
-│   │   ├── lib/                # supabaseClient
+│   │   │   ├── auth/         # ProtectedRoute
+│   │   │   ├── layout/       # Navbar, Footer, ErrorBoundary, ScrollToTop
+│   │   │   └── ui/           # Button, Input, Card, Badge, Avatar, Modal, Spinner
+│   │   ├── context/          # AuthContext (session + profile + idle logout)
+│   │   ├── lib/              # supabaseClient
 │   │   └── assets/
 │   └── vite.config.js / tailwind.config.js
 │
-├── server/                     # Express API
-│   ├── server.js               # App entry, CORS, routers, expiry job
-│   ├── routes/                 # listings, purchases, reviews, admin, ipfs, users, apikeys, auth
-│   ├── middleware/             # requireAuth / requireSeller / requireBuyer / requireAdmin
-│   ├── lib/                    # supabaseAdmin (service-role client)
-│   └── *.js                    # DB utility & migration scripts
+├── server/                   # Express API
+│   ├── server.js             # App entry, CORS, routers, expiry job
+│   ├── routes/               # listings, purchases, reviews, admin, ipfs, users, apikeys, auth
+│   ├── middleware/           # requireAuth / requireSeller / requireBuyer / requireAdmin
+│   ├── lib/                  # supabaseAdmin (service-role client)
+│   └── *.js                  # DB utility & migration scripts
 │
-├── schema.sql                  # Full Supabase DDL + RLS policies
-├── setup_admin.sql             # Promote an account to admin
-├── SUPABASE_EMAIL_TEMPLATE.md  # Branded OTP email template
-├── design-system/              # Generated UI/UX design specs (reference)
-└── .agent/                     # UI/UX skill datasets used to generate specs
+├── schema.sql                # Full Supabase DDL + RLS policies
+├── setup_admin.sql           # Promote an account to admin
+├── SUPABASE_EMAIL_TEMPLATE.md# Branded OTP email template
+├── design-system/            # Generated UI/UX design specs (reference)
+└── .agent/                   # UI/UX skill datasets used to generate specs
 ```
 
----
+<img src="./assets/divider.svg" alt="" width="100%">
 
 ## 🚀 Getting Started
+
+> [!TIP]
+> Fastest path: clone → run the two SQL files in Supabase → fill `.env` → start both dev servers.
 
 ### Prerequisites
 - **Node.js** ≥ 18 (npm ≥ 9)
@@ -224,9 +267,12 @@ npm run dev --prefix client
 npm run build --prefix client   # outputs client/dist/
 ```
 
----
+<img src="./assets/divider.svg" alt="" width="100%">
 
 ## 🔐 Environment Variables
+
+> [!WARNING]
+> `.env` files are **git-ignored** — never commit real keys. Only the `.env.example` templates live in the repo.
 
 ### `server/.env`
 
@@ -248,9 +294,7 @@ npm run build --prefix client   # outputs client/dist/
 | `VITE_SUPABASE_ANON_KEY` | Browser-safe anon key |
 | `VITE_API_URL` | API base (default `http://localhost:5000/api`) |
 
-> 🔒 `.env` files are git-ignored. Only the `.env.example` templates are committed.
-
----
+<img src="./assets/divider.svg" alt="" width="100%">
 
 ## 🗄️ Database Schema
 
@@ -264,7 +308,7 @@ npm run build --prefix client   # outputs client/dist/
 
 Row-Level Security is **enabled on all tables**; the API writes through the service-role client after enforcing auth, roles and ownership in code.
 
----
+<img src="./assets/divider.svg" alt="" width="100%">
 
 ## 📡 API Reference
 
@@ -311,7 +355,7 @@ Base URL: `http://localhost:5000/api` — all protected routes require `Authoriz
 | POST | `/auth/register` · `/auth/resend-otp` · `/auth/verify-otp` | Public | Server-side OTP helpers (alt. to client SDK) |
 | GET | `/health` | Public | Liveness check |
 
----
+<img src="./assets/divider.svg" alt="" width="100%">
 
 ## 🛠️ Utility Scripts
 
@@ -326,7 +370,10 @@ Run from the `server/` directory (`node <script>.js`):
 | `clear_all_listings.js` | ⚠️ Wipe reviews → keys → purchases → listings |
 | `add_column.js` · `add_showcase_images.js` · `add_key_preview.js` | One-off column migrations |
 
----
+> [!IMPORTANT]
+> `clear_all_listings.js` is **destructive** — it deletes marketplace data. Run only on dev/demo databases.
+
+<img src="./assets/divider.svg" alt="" width="100%">
 
 ## 📆 Development Phases
 
@@ -340,8 +387,9 @@ The repository is delivered in reviewable, single-responsibility commits:
 | 4️⃣ | React frontend — full SPA (auth, marketplace, checkout, seller & admin dashboards) |
 | 5️⃣ | DB utility & migration scripts |
 | 6️⃣ | Design system specs & UI/UX agent assets |
+| 7️⃣ | README visual identity — animated banner, typing tagline, status bars, dividers |
 
----
+<img src="./assets/divider.svg" alt="" width="100%">
 
 ## 🗺️ Roadmap & Known Limitations
 
@@ -358,12 +406,19 @@ Honest status of the current build:
 - [ ] Automated tests & CI
 - [ ] Revealable key history in *My Purchases* (currently only the SHA-256 hash is stored)
 
----
+<img src="./assets/divider.svg" alt="" width="100%">
 
 ## 📄 License
 
 MIT — feel free to use, fork, and build upon this project.
 
 <div align="center">
-  <sub>Built as a Final Year Project · MetaModels © 2026</sub>
+
+<br>
+
+![Made with Love](https://img.shields.io/badge/Made%20with-%E2%9D%A4%20-F43F5E?style=for-the-badge)
+![Final Year Project](https://img.shields.io/badge/Final-Year%20Project-2026-E2B340?style=for-the-badge&logo=graduationcap&logoColor=black)
+
+<sub>Built as a Final Year Project · MetaModels © 2026</sub>
+
 </div>
